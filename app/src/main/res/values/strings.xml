@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">4G热点客户端</string>
+    <string name="menu_search">查找</string>
+    <string name="menu_notifications">通知</string>
+    <string name="item_01">Item 1</string>
+    <string name="item_02">Item 2</string>
+</resources>

@@ -1,0 +1,78 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <!-- toolbar（actionbar）颜色 -->
+        <item name="colorPrimary">@color/color_0176da</item>
+
+        <!-- 状态栏颜色,其中如果想系统状态栏的颜色要保持和Toolbar颜色一致的话，会涉及到API版本问题，
+            在android 5.0及以后可以直接通过theme属性来设置<item name="colorPrimaryDark">，
+            android 4.4-5.0需要额外的方法去控制 -->
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+
+        <!-- 为各控制元件(如：check box、switch 或是 radio) 被勾选 (checked) 或是选定 (selected) 的颜色。 -->
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <!-- 窗口的背景颜色 -->
+
+
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+    </style>
+
+    <style name="Theme.ToolBar.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textColorPrimary">@color/color_f5f5f5</item>
+        <item name="android:textSize">20sp</item> <!--  搞定字体大小-->
+        <item name="actionOverflowMenuStyle">@style/LYJMenuStyle</item>
+    </style>
+
+    <style name="Theme.ToolBar.Button" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="actionOverflowButtonStyle">@style/ActionButton.Overflow.Base</item>
+    </style>
+
+    <style name="ActionButton.Overflow.Base" parent="android:style/Widget.Holo.Light.ActionButton.Overflow">
+        <item name="android:src">@mipmap/ic_menu_more_overflow</item>
+    </style>
+
+    <style name="LYJMenuStyle" parent="@style/Widget.AppCompat.Light.PopupMenu.Overflow">
+        <item name="overlapAnchor">false</item>
+        <item name="android:dropDownWidth">40dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:popupBackground">@color/color_0176da</item>
+        <item name="android:dropDownVerticalOffset">0dp</item>
+        <item name="android:dropDownHorizontalOffset">0dp</item>
+    </style>
+
+    <style name="ActionBarTitle" parent="android:Widget.TextView">
+
+        <!-- The action bar title font -->
+        <item name="android:fontFamily">sans-serif-light</item>
+
+        <!-- Customizes the color of the action bar title-->
+        <item name="android:textColor">@color/color_f5f5f5</item>
+
+        <!-- Customizes the size of the action bar title-->
+        <item name="android:textSize">24sp</item>
+
+    </style>
+    <style name="text_size_content">
+        <item name="android:textSize">18sp</item>
+       <!-- <item name="android:textColor">#000000</item>-->
+    </style>
+    <style name="color_title_background">
+        <item name="android:background">#0176da</item>
+    </style>
+    <style name="color_title">
+        <item name="android:textColor">@color/color_f5f5f5</item>
+    </style>
+    <style name="text_size_content_15">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+</resources>

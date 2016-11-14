@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_height="match_parent"
+              android:layout_width="match_parent"
+              android:layout_margin="5dp"
+              >
+    <TextView
+        android:id="@+id/imsi"
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="41102354645565414"
+        android:textColor="@color/color_black"
+        android:textSize="14sp"/>
+    <TextView
+        android:id="@+id/imei"
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:text="41102354645565414"
+        android:textColor="@color/color_black"
+        android:textSize="14sp"/>
+    <TextView
+        android:id="@+id/timer"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_black"
+        android:text="23:20:37"/>
+
+
+</LinearLayout>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_black"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.zed.hotsport.activity.BlackActivity">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolBar"
+        android:background="@color/color_0176da"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </android.support.v7.widget.Toolbar>
+    <ListView
+        android:id="@+id/list_View"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:cacheColorHint="@color/color_white"
+        android:listSelector="@color/color_white">
+    </ListView>
+
+
+</LinearLayout>
