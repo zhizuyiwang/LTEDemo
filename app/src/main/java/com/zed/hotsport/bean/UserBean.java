@@ -147,7 +147,7 @@ public class UserBean implements Parcelable {
         this.phoneType = in.readString();
     }
 
-    public static final Parcelable.Creator<UserBean> CREATOR = new Parcelable.Creator<UserBean>() {
+    public static final Creator<UserBean> CREATOR = new Creator<UserBean>() {
         @Override
         public UserBean createFromParcel(Parcel source) {
             return new UserBean(source);

@@ -10,5 +10,9 @@
           android:title="高级配置"
           app:showAsAction="never">
     </item>
+    <item android:id="@+id/action_get_para"
+        android:title="获取小区参数"
+        app:showAsAction="never">
+    </item>
 
 </menu>

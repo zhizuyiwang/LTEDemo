@@ -44,7 +44,7 @@ public class LeftListAdapter extends BaseAdapter{
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.imsi.setText(data.get(position).getImei());
+        viewHolder.imsi.setText(data.get(position).getImsi());
         return convertView;
 
     }

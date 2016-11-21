@@ -29,7 +29,6 @@ public class TCPClient{
     public TCPClient(int targetPort, Context context){
         this.mIntTargetPort = targetPort;
         this.context = context;
-
         try {
             this.mServerSocket = new ServerSocket(mIntTargetPort);
         } catch (IOException e) {
@@ -75,7 +74,6 @@ public class TCPClient{
     public void setSocket(Socket socket){
         this.mSocket = socket;
     }
-
     /**
      * 返回当前连接
      *
@@ -84,7 +82,6 @@ public class TCPClient{
     public Socket getSocket(){
         return this.mSocket;
     }
-
     /**
      * 获取当前建链本地端口
      *
@@ -93,12 +90,10 @@ public class TCPClient{
     public int getTargetPort() {
         return this.mIntTargetPort;
     }
-
     /**
      * 关闭Socket连接
      */
     public void closeSocket(TCPClient client){
-
         try {
             if(client.getSocket()!=null){
                 client.getSocket().close();

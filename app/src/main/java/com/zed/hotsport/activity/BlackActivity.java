@@ -48,7 +48,6 @@ public class BlackActivity extends AppCompatActivity {
         initToolBar();
         initData();
         initListener();
-
     }
 
     /**

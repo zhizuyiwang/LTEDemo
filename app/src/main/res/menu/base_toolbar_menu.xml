@@ -1,21 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
+    <!--<item
         android:id="@+id/action_add"
         android:title="测试添加数据"
-        app:showAsAction="never" />
+        app:showAsAction="never" />-->
+
+    <item android:id="@+id/action_black"
+        android:title="黑名单"
+        app:showAsAction="never">
+    </item>
     <item
         android:id="@+id/action_setting"
         android:title="参数配置"
         app:showAsAction="never" />
-    <item android:id="@+id/action_black"
-          android:title="黑名单"
-          app:showAsAction="never">
+    <item android:id="@+id/action_catch_setting"
+        android:title="开关侦码设置"
+        app:showAsAction="never">
     </item>
-    <item android:id="@+id/action_white"
-          android:title="白名单"
-          app:showAsAction="never">
+
+    <item android:id="@+id/action_device_state"
+        android:title="设备状态"
+        app:showAsAction="never">
+    </item>
+    <item android:id="@+id/action_version_query"
+        android:title="版本查询"
+        app:showAsAction="never">
     </item>
 
 </menu>

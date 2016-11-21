@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.zed.hotsport.base.BaseApplication;
+import com.zed.hotsport.bean.CellBean;
 import com.zed.hotsport.utils.ConvertCodeUtility;
 
 import java.io.IOException;
@@ -77,7 +78,6 @@ public class TCPOutHelper {
         } catch (IOException e) {
             e.printStackTrace();
             Log.e(TAG, "发送Socket写入出错！");
-
             return false;
         }
     }
@@ -107,7 +107,7 @@ public class TCPOutHelper {
      *          开关功放的标志位
      * @return
      */
-    public boolean msgStartRF(int eid, byte cellId ,byte flag) {
+    public boolean msgSetPA(int eid, byte cellId ,byte flag) {
         byte[] data = new byte[2];
         data[0] = cellId;
         data[1] = flag;
@@ -123,7 +123,7 @@ public class TCPOutHelper {
      *      开关侦码标志位
      * @return
      */
-    public boolean msgStartCatch(int eid,byte flag){
+    public boolean msgSetAllCatch(int eid,byte flag){
         byte[] data = new byte[1];
         data[0] = flag;
 
@@ -156,7 +156,6 @@ public class TCPOutHelper {
 
         return sendMsg(mBaseApplication.getTCPClient(TCPConfig.SOCKET_CONFIG_PORT_3G),
                 ConvertCodeUtility.short2Bytes(TCPConfig.MSG_SET_DATETIME),eid,data);
-
     }
 
     /**
@@ -169,7 +168,6 @@ public class TCPOutHelper {
         return sendMsg(mBaseApplication.getTCPClient(TCPConfig.SOCKET_CONFIG_PORT_3G),
                 ConvertCodeUtility.short2Bytes(TCPConfig.MSG_GET_DATETIME),eid,null);
     }
-
     /**
      * 获取设备版本号类型MSG_GET_VERSION，只有消息头
      * @param eid
@@ -195,7 +193,7 @@ public class TCPOutHelper {
     }
 
     /**
-     * 获取小区参数请求类型MSG_GET_CELL_PARA_REQ,只用消息头
+     * 获取小区参数请求类型MSG_GET_CELL_PARA_REQ,只有消息头
      * @param eid
      * @return
      */
@@ -215,8 +213,32 @@ public class TCPOutHelper {
     }
 
 
-    public boolean msgSetCellPara(){
+    /**
+     * 设置小区的参数
+     * @return
+     */
+    public boolean msgSetCellPara(int eid, CellBean cellBean,int flag,int type){
+        int rfcn = Integer.parseInt(cellBean.getFrequency());//频点
+        short tac = Short.parseShort(cellBean.getTac());//位置区
+        int tac_increase = Integer.parseInt(cellBean.getLac_period());//位置区更新周期
+        byte band = (byte) Integer.parseInt(cellBean.getBand());//频段
+        byte dianPing = (byte) Integer.parseInt(cellBean.getDianPing());//最小接入电平
+        byte power_rand = (byte) (20 - cellBean.getPower_down());//功率等级
 
-        return true;
+        byte[] data = new byte[22];
+        data[0] = 1;
+        data[1] = (byte) flag;
+        System.arraycopy(new byte[]{0,0},0,data,2,2);
+        System.arraycopy(ConvertCodeUtility.int2Bytes(rfcn),0,data,4,4);
+        System.arraycopy(ConvertCodeUtility.short2Bytes((short) 6),0,data,8,2);
+        System.arraycopy(ConvertCodeUtility.short2Bytes(tac),0,data,10,2);
+        System.arraycopy(ConvertCodeUtility.int2Bytes(tac_increase),0,data,12,4);
+        data[16] = band;
+        data[17] = (byte) type;
+        data[18] = power_rand;
+        data[19] = dianPing;
+        System.arraycopy(ConvertCodeUtility.short2Bytes((short) 460),0,data,20,2);
+        return sendMsg(mBaseApplication.getTCPClient(TCPConfig.SOCKET_CONFIG_PORT_3G),
+                ConvertCodeUtility.short2Bytes(TCPConfig.MSG_SET_CELL_RFPARA_REQ),eid,data);
     }
 }

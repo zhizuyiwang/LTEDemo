@@ -23,7 +23,6 @@ public class TCPService extends Service {
 
     private TCPInputHelper mInputHelper = null;//Socket读取工具类
 
-
     public TCPService() {
 
     }
@@ -49,7 +48,6 @@ public class TCPService extends Service {
                 @Override
                 public void run() {
                     client = mBaseApplication.getTCPClient(mTargetPort);
-
                     if(client==null){
                         //每次重新获取，断链时可以清除全局变量
                         Log.e("TAG","从全局类中得到的Client为空");
@@ -62,6 +60,7 @@ public class TCPService extends Service {
                                 if(client != null){
                                     mSocket = client.getSocket();
                                     while (isConnect && mSocket != null && mSocket.isConnected()){
+                                        Log.e("TAG","开始监听socket中的数据");
                                         mInputHelper.readSocket(mSocket);
                                         SystemClock.sleep(300);
                                     }
@@ -73,33 +72,14 @@ public class TCPService extends Service {
                 }
             }.start();
         }
-
-       /* SystemClock.sleep(1000);
-        //开启读取线程
-        new Thread(){
-            @Override
-            public void run() {
-                if(client != null){
-                    mSocket = client.getSocket();
-                    while (isConnect && mSocket != null && mSocket.isConnected()){
-                        mInputHelper.readSocket(mSocket);
-                        //mInputHelper.readSocket1(mSocket);
-                        SystemClock.sleep(300);
-                    }
-                }
-            }
-        }.start();*/
-
         return Service.START_REDELIVER_INTENT;
     }
-
     @Override
     public void onDestroy() {
         this.isConnect = false;
         disConnected();
         super.onDestroy();
     }
-
     /**
      * 断链操作方法
      */
@@ -112,6 +92,5 @@ public class TCPService extends Service {
         if(mInputHelper != null){
             mInputHelper.stopTimer();
         }
-
     }
 }

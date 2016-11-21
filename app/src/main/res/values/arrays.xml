@@ -8,7 +8,6 @@
         <item>中国电信</item>
     </string-array>
     <string-array name="descend">
-        <item>off</item>
         <item>0</item>
         <item>1</item>
         <item>2</item>
@@ -29,6 +28,7 @@
         <item>17</item>
         <item>18</item>
         <item>19</item>
+        <item>20</item>
     </string-array>
     <string-array name="CDX">
         <item>关闭</item>

@@ -16,6 +16,7 @@ public final class BaseApplication extends Application{
     public  Map<Integer,TCPClient> mTCPClients = null;
     /** 当前连接设备ID **/
     public static int CurrentEid = 0;
+    public static boolean connect = false;
 
     /**
      * 存储已连接的对象

@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,9 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -26,14 +24,12 @@ import com.zed.hotsport.TCP.TCPAction;
 import com.zed.hotsport.TCP.TCPService;
 import com.zed.hotsport.adapter.LeftListAdapter;
 import com.zed.hotsport.adapter.RightListAdapter;
+import com.zed.hotsport.base.BaseApplication;
+import com.zed.hotsport.base.Constant;
 import com.zed.hotsport.bean.UserBean;
-import com.zed.hotsport.utils.ConvertCodeUtility;
-import com.zed.hotsport.utils.OpenDialogUtils;
 import com.zed.hotsport.utils.ToastUtils;
 import com.zed.hotsport.utils.UtilTools;
 import com.zed.hotsport.view.SyncHorizontalScrollView;
-
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -92,12 +88,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action.equals(TCPAction.ACTION_CATCH)) {//上报广播
-                /*UserBean user = intent.getParcelableExtra("USER");
-                users.add(0,user);
+                ArrayList<UserBean> list = intent.getParcelableArrayListExtra("USERS");
+                for(int i = 0;i<list.size();i++){
+                    users.add(0,list.get(i));
+                }
                 leftListAdapter.notifyDataSetChanged();
                 rightListAdapter.notifyDataSetChanged();
                 UtilTools.setListViewHeightBasedOnChildren(listView1);
-                UtilTools.setListViewHeightBasedOnChildren(listView2);*/
+                UtilTools.setListViewHeightBasedOnChildren(listView2);
                 ToastUtils.showToast(MainActivity.this,"上报数据",0);
             }
             if(action.equals(TCPAction.ACTTON_CESHI)){
@@ -106,7 +104,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(action.equals(TCPAction.ACTTON_START)){
                 ToastUtils.showToast(MainActivity.this,"通讯初始化成功",0);
             }
-
         }
     };
 
@@ -128,7 +125,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //开始TCP通讯
         startTCPService();
         initListener();
-
     }
 
     /**
@@ -150,7 +146,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
             }
         });
-
     }
 
     private void showItemDialog(int position) {
@@ -192,7 +187,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         inflater = getLayoutInflater();
         items = new String[]{"添加至黑名单","添加至白名单"};
         for (int i = 0;i < 20;i++){
-            addUser();
+           // addUser();
         }
         leftListAdapter = new LeftListAdapter(users,MainActivity.this);
         rightListAdapter = new RightListAdapter(users,MainActivity.this);
@@ -220,32 +215,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public boolean onMenuItemClick(MenuItem item) {
                 int menuId = item.getItemId();
                 switch (menuId) {
-                    case R.id.action_add:
-
-                        addUser();
-                        Intent intent = new Intent(TCPAction.ACTION_CATCH);
-                        MainActivity.this.sendBroadcast(intent);
-                        break;
-                    case R.id.action_setting:
+                    case R.id.action_setting://参数配置界面
                         Intent setActivity = new Intent(MainActivity.this, SetActivity.class);
                         startActivity(setActivity);
                         break;
-                    case R.id.action_black:
+                    case R.id.action_black://黑名单界面
                         Intent blackActivity = new Intent(MainActivity.this, BlackActivity.class);
                         startActivity(blackActivity);
-
                         break;
-                    case R.id.action_white:
-                        Intent whiteActivity = new Intent(MainActivity.this, WhiteActivity.class);
-                        startActivity(whiteActivity);
-
+                    case R.id.action_device_state://设备状态界面
+                        Intent deviceActivity = new Intent(MainActivity.this,DeviceStatusActivity.class);
+                        startActivity(deviceActivity);
+                        break;
+                    case R.id.action_version_query://版本查询界面
+                        Intent versionActivity = new Intent(MainActivity.this,VersionQueryActivity.class);
+                        startActivity(versionActivity);
+                        break;
+                    case R.id.action_catch_setting://开关侦码设置界面
+                        Intent catchSettingActivity = new Intent(MainActivity.this,CatchSettingActivity.class);
+                        startActivity(catchSettingActivity);
                         break;
                 }
                 return true;
             }
         });
     }
-
     /**
      * 添加上报的信息（假数据）
      */
@@ -322,7 +316,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        BaseApplication.connect = false;
         unregisterReceiver(receiver);
         stopTCPService();
+        //清除保存设备状态的数据
+        SharedPreferences sp_device_status = getSharedPreferences(Constant.DEVICE_STATUS,0);
+        sp_device_status.edit().clear().commit();
     }
 }
